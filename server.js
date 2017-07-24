@@ -2,10 +2,20 @@ const express = require('express');
 const app = express();
 const path = require('path');
 
+app.use((req, res, next) => {
+    if(req.headers['x-forwarded-proto'] === 'http'){
+      next();
+    }else{
+      res.redirect('http://' + req.hostname + req.url);
+    }
+});
+
 app.use(express.static('public'));
 
-app.listen(3000, () => {
-  console.log('Listening on Port 3000');
+const PORT = process.env.PORT || 3000;
+
+app.listen(PORT, () => {
+  console.log('Listening on Port ' + PORT);
 });
 
 app.get('*', function (req, res){
