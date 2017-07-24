@@ -6,6 +6,10 @@ const Weather = require('Weather');
 const About = require('About');
 const Examples = require('Examples');
 
+//Load foundation
+require('style!css!foundation-sites/dist/foundation.min.css');
+$(document).foundation();
+
 ReactDOM.render(
     <BrowserRouter>
       <Main>
