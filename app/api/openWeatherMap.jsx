@@ -11,8 +11,8 @@ const OPEN_WEATHER_MAP_URL = 'http://api.openweathermap.org/data/2.5/weather?app
     }else{
       return res.data.main.temp;
     }
-  }, function (res) {
-    throw new Error(res.data.message);
+  }, function () {
+    throw new Error('Unable to fetch weather for that Location.');
   })
 }
 
@@ -25,8 +25,8 @@ function getDescription(location){
     }else{
       return res.data.weather[0].description;
     }
-  }, function (res) {
-    throw new Error(res.data.message);
+  }, function () {
+    throw new Error('Unable to fetch weather for that Location.');
   })
 }
 
@@ -39,8 +39,8 @@ function getIconId(location){
     }else{
       return res.data.weather[0].icon;
     }
-  }, function (res) {
-    throw new Error(res.data.message);
+  }, function () {
+    throw new Error('Unable to fetch weather for that Location.');
   })
 }
 
@@ -53,8 +53,8 @@ function getCountryId(location){
     }else{
       return res.data.sys.country.toLowerCase();
     }
-  }, function (res) {
-    throw new Error(res.data.message);
+  }, function () {
+    throw new Error('Unable to fetch weather for that Location.');
   })
 }
 module.exports = {

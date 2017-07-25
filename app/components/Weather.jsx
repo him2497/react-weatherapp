@@ -2,12 +2,13 @@ const React = require('react');
 const WeatherForm = require('WeatherForm');
 const WeatherMessage = require('WeatherMessage');
 const openWeatherMap = require('openWeatherMap');
+const ErrorModal = require('ErrorModal');
 
 class Weather extends React.Component{
   constructor(props){
     super(props);
     this.state = {
-      isLoading: false
+      isLoading: false,
     }
     this.handleSearch = this.handleSearch.bind(this);
   };
@@ -15,15 +16,20 @@ class Weather extends React.Component{
   handleSearch(location){
     var that = this;
 
-    this.setState({isLoading: true});
+    this.setState({isLoading: true,
+      errorMessage: undefined });
 
     openWeatherMap.getTemp(location).then(function(temp){
       that.setState({
         location:location,
         temp:temp,
+        isLoading: false
       });
-    }, function (errorMessage) {
-      console.log(errorMessage);
+    }, function (e) {
+      that.setState({
+        isLoading: false,
+        errorMessage: e.message
+      });
     });
 
     openWeatherMap.getDescription(location).then(function(description){
@@ -33,7 +39,6 @@ class Weather extends React.Component{
     }, function (errorMessage) {
       console.log(errorMessage);
     });
-    debugger;
     openWeatherMap.getIconId(location).then(function(iconID){
       that.setState({
         iconID: iconID
@@ -47,13 +52,16 @@ class Weather extends React.Component{
         isLoading: false,
         countryID: countryID
       });
-    }, function (errorMessage) {
-      that.setState({isLoading: false});
+    }, function (e) {
+      that.setState({
+        isLoading: false,
+        errorMessage: e.message
+      });
       console.log(errorMessage);
     });
   }
   render() {
-    var {isLoading, location, temp, description, iconID, countryID} = this.state;
+    var {isLoading, location, temp, description, iconID, countryID, errorMessage} = this.state;
 
     function renderMessage() {
       if(isLoading){
@@ -63,11 +71,20 @@ class Weather extends React.Component{
       }
     }
 
+    function renderError() {
+      if(typeof errorMessage === "string"){
+        return(
+          <ErrorModal message={errorMessage}/>
+        )
+      }
+    }
+
     return (
       <div>
         <h1 className="text-center">Get Weather</h1>
         <WeatherForm onSearch={this.handleSearch}/>
         {renderMessage()}
+        {renderError()}
       </div>
     );
   }
