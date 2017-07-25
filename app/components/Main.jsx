@@ -6,8 +6,11 @@ class Main extends React.Component{
       return (
         <div>
           <Navigation/>
-          <h1>Main component</h1>
-          {this.props.children}
+          <div className="row">
+            <div className="columns medium-5 large-6 small-centered">
+              {this.props.children}
+            </div>
+          </div>
         </div>
       );
   }
