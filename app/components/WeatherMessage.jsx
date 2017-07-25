@@ -7,8 +7,12 @@ class WeatherMessage extends React.Component {
     var COUNTRY_URL = "http://openweathermap.org/images/flags/"+countryID+".png";
     return (
       <div>
-        <p>The temperature in {location} <img src={COUNTRY_URL}/> is {temp} and the weather looks like {description}</p>
-        <img src={IMG_URL}/>
+        <div className="columns large-10">
+          <h4 className="text-center">The temperature in {location} <img src={COUNTRY_URL} width="25" height="25"/> is {temp} and the weather looks like {description}</h4>
+        </div>
+        <div className="columns large-2">
+          <img src={IMG_URL} className="text-center" width="75" height="75"/>
+        </div>
       </div>
     )
   }
