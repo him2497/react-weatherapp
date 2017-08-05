@@ -4,7 +4,7 @@ class About extends React.Component{
   render() {
     return(
       <div>
-        <h1 className="text-center">About</h1>
+        <h1 className="text-center page-title">About</h1>
         <p>
           Welcome to the about page of my react weather app.
           This app is using React, OpenWeatherMap for data and Foundation for styling.
