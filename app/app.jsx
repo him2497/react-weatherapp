@@ -14,7 +14,7 @@ $(document).foundation();
 require('style!css!sass!applicationStyles');
 
 ReactDOM.render(
-    <BrowserRouter>
+    <BrowserRouter history={history}>
       <Main>
         <Route exact path="/" component={Weather}/>
         <Route path="/about" component={About}/>

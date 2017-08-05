@@ -1,10 +1,20 @@
 const React = require('react');
-const {Link, NavLink} = require('react-router-dom');
+const {Link, NavLink, withRouter} = require('react-router-dom');
+
 
 class Navigation extends React.Component {
-  onSearch(e) {
+
+constructor(props){
+  super(props);
+  this.onSearch = this.onSearch.bind(this);
+}
+  onSearch(e){
     e.preventDefault();
-    alert('Not yet working');
+       const location = this.refs.search.value;
+       if (location.length > 0) {
+           this.props.history.push('/?location=' + location);
+           this.refs.search.value = '';
+       }
   }
 
   render() {
@@ -34,7 +44,7 @@ class Navigation extends React.Component {
           <form onSubmit={this.onSearch}>
             <ul className="menu">
               <li>
-                <input type="search" placeholder="Search weather"/>
+                <input type="search" placeholder="Search weather" ref="search"/>
               </li>
               <li>
                 <input type="submit" className="button" value="Get Weather by city"/>
@@ -47,4 +57,4 @@ class Navigation extends React.Component {
   }
 }
 
-module.exports = Navigation;
+module.exports = withRouter(Navigation);
