@@ -1,5 +1,6 @@
 const webpack = require('webpack');
 module.exports = {
+  devtool: 'cheap-module-eval-source-map',
   entry: [
     'script!jquery/dist/jquery.min.js',
     'script!foundation-sites/dist/foundation.min.js',
@@ -9,21 +10,24 @@ module.exports = {
     jquery: 'jQuery',
   },
   plugins: [
-    new webpack.ProvidePlugin({
-      $: 'jquery',
-      jQuery: 'jquery',
-    }),
     new webpack.DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify('production')
-    }),
-    new webpack.optimize.DedupePlugin(),
-    new webpack.optimize.UglifyJsPlugin({
-      compress:{
-        warnings: true
+      'process.env': {
+        'NODE_ENV': JSON.stringify('production'),
       }
     }),
-    new webpack.optimize.OccurrenceOrderPlugin(),
     new webpack.optimize.AggressiveMergingPlugin(),
+    new webpack.optimize.OccurrenceOrderPlugin(),
+    new webpack.optimize.DedupePlugin(),
+    new webpack.optimize.UglifyJsPlugin({
+      mangle: true,
+      compress: {
+        warnings: false, // Suppress uglification warnings
+        pure_getters: true,
+        unsafe: true,
+        unsafe_comps: true,
+        screw_ie8: true
+      },
+    })
   ],
   output: {
     path: __dirname,
@@ -56,6 +60,5 @@ module.exports = {
         exclude: /(node_modules|bower_components)/
       }
     ]
-  },
-  devtool: 'cheap-module-eval-source-map'
+  }
 };
